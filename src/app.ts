@@ -20,7 +20,7 @@ app.use(cookieParser());
 // app.post(
 //   '/webhook/stripe',
 //   express.raw({ type: 'application/json' }),
-//   stripeWebhookHandler,
+//   stripeWebhookHandler, 
 // );
 // app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -33,9 +33,6 @@ app.use(
       'http://localhost:5175',
       'http://localhost:5173',
       'http://localhost:5174',
-     
-
- 
     ],
      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,

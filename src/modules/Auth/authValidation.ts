@@ -24,20 +24,34 @@ const passwordSchema = z
     message: "Password must contain at least one special character",
   });
 
+
 export const registerUserValidationSchema = z.object({
   body: z
     .object({
-      name: z
-        .string()
+      firstName: z
+        .string({ message: "First name is required" })
         .trim()
-        .min(1, { message: "Name is required" }),
+        .min(1, { message: "First name cannot be empty" })
+        .max(50, { message: "First name cannot exceed 50 characters" }),
+
+      lastName: z
+        .string({ message: "Last name is required" })
+        .trim()
+        .min(1, { message: "Last name cannot be empty" })
+        .max(50, { message: "Last name cannot exceed 50 characters" }),
 
       email: z
+        .string({ message: "Email is required" })
+        .trim()
+        .email({ message: "Invalid email address" })
+        .toLowerCase(),
+
+      password: passwordSchema,
+
+      referralCode: z
         .string()
         .trim()
-        .email("Invalid email address"),
-
-      password:passwordSchema
+        .optional(),
     })
     .strict(),
 }).strict();

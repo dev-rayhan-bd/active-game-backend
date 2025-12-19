@@ -1,21 +1,32 @@
 /* eslint-disable no-unused-vars */
-import mongoose, {  Model } from 'mongoose';
+import  mongoose, {  Model } from 'mongoose';
 import { USER_ROLE } from '../Auth/auth.constant';
 
 
-export type TUser = {
-    _id:string;
-  name: string;
-  image?: string;
+export interface TUser {
+   _id?: mongoose.Types.ObjectId;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
-      passwordChangedAt?: Date;
-verification?: {
-    code: string;
-    expireDate: Date;
+    verification?: {
+    code: string | null;
+    expireDate: Date | null;
   };
-  role:string
-};
+ refercode:string,
+  rotScore: number;
+       referredBy?: mongoose.Types.ObjectId; 
+  referrals?: (mongoose.Types.ObjectId | User)[];
+  avatarAchived: string[]; 
+  screenTimeData: Record<string, any>; 
+  movementData: Record<string, any>; 
+  rank: number;
+  status: string;
+  walletBalance: number;
+      passwordChangedAt?: Date;
+  role: 'owner' | 'member'
+}
+
 
 export interface IUserMethods {
   comparePassword(candidatePassword: string): Promise<boolean>;

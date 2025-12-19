@@ -18,6 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "aws-sdk": "^2.1693.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",

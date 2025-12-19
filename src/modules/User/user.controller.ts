@@ -27,7 +27,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
   // }
       if (req.file) {
-      const imageUrl = await uploadImage(req); // S3 URL আসবে
+      const imageUrl = await uploadImage(req)
       payload.image = imageUrl;
     }
 

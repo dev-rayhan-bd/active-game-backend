@@ -2,26 +2,18 @@ import { model, Schema } from 'mongoose';
 
 import bcrypt from 'bcrypt';
 import config from '../../app/config';
-import { IUserMethods, TUser, User } from './user.interface';
+import {  IUserMethods, TUser, User } from './user.interface';
 import { UserStatus } from '../Auth/auth.constant';
 
-const userSchema = new Schema<TUser, User, IUserMethods>(
-  {
-    name: { type: String, required: true },
-
-    image: { type: String },
-
-    email: { type: String, required: true, unique: true },
 
 
-    password: { type: String, required: true, select: false },
-    role: {
-      type: String,
-      enum: ['superAdmin'],
-      default: 'superAdmin',
-    },
-
-    verification: {
+const userSchema = new Schema<TUser, User, IUserMethods>({
+  
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true,select:false },
+     verification: {
       code: {
         type: String,
         default: null,
@@ -31,17 +23,22 @@ const userSchema = new Schema<TUser, User, IUserMethods>(
         default: null,
       },
     },
+ refercode: { type: String, unique: true, sparse: true },
+  rotScore: { type: Number, required: true },
+    referredBy: { type: Schema.Types.ObjectId, ref: 'User', default: null, index: true },
+     referrals: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  avatarAchived: { type: [String], default: [] }, 
+  screenTimeData: { type: Schema.Types.Mixed, default: {} },
+  movementData: { type: Schema.Types.Mixed, default: {} },
+  rank: { type: Number, required: true },
+  status: { type: String, required: true, enum: UserStatus, default: 'in-progress'},
+  walletBalance: { type: Number, required: true },
+  role: { type: String, required: true, enum: ['owner', 'member'],default:'member' },
+}, {
+  timestamps: true, 
+});
 
-
-
-   
-  },
-  {
-    timestamps: true,
-  },
-);
-
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next:any) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(
       this.password,
@@ -49,7 +46,7 @@ userSchema.pre('save', async function (next) {
     );
   }
 
-  // ✅ Always hash if verification.code exists and is not already hashed
+  //  Always hash if verification.code exists and is not already hashed
   if (this.verification?.code && !this.verification.code.startsWith('$2b$')) {
     this.verification.code = bcrypt.hashSync(
       this.verification.code,

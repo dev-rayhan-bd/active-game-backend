@@ -17,7 +17,7 @@ const uploadImage = async (
 
   const env = process.env.NODE_ENV;
 
-  // 🔹 production: S3
+  // production: S3
   if (env === 'production') {
     const params = {
       Bucket: config.aws_bucket_name as string,
