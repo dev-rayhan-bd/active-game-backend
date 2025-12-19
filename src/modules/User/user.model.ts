@@ -24,21 +24,21 @@ const userSchema = new Schema<TUser, User, IUserMethods>({
       },
     },
  refercode: { type: String, unique: true, sparse: true },
-  rotScore: { type: Number, required: true },
+  rotScore: { type: Number,default: 0 },
     referredBy: { type: Schema.Types.ObjectId, ref: 'User', default: null, index: true },
      referrals: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   avatarAchived: { type: [String], default: [] }, 
   screenTimeData: { type: Schema.Types.Mixed, default: {} },
   movementData: { type: Schema.Types.Mixed, default: {} },
-  rank: { type: Number, required: true },
+  rank: { type: Number,default: 0 },
   status: { type: String, required: true, enum: UserStatus, default: 'in-progress'},
-  walletBalance: { type: Number, required: true },
+  walletBalance: { type: Number,default: 0},
   role: { type: String, required: true, enum: ['owner', 'member'],default:'member' },
 }, {
   timestamps: true, 
 });
 
-userSchema.pre('save', async function (next:any) {
+userSchema.pre('save', async function () {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(
       this.password,
@@ -46,15 +46,13 @@ userSchema.pre('save', async function (next:any) {
     );
   }
 
-  //  Always hash if verification.code exists and is not already hashed
+  // Always hash if verification.code exists and is not already hashed
   if (this.verification?.code && !this.verification.code.startsWith('$2b$')) {
     this.verification.code = bcrypt.hashSync(
       this.verification.code,
       Number(config.bcrypt_salt_rounds),
     );
   }
-
-  next();
 });
 
 userSchema.methods.compareVerificationCode = function (userPlaneCode: string) {

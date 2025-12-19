@@ -48,7 +48,7 @@ export const registerUserValidationSchema = z.object({
 
       password: passwordSchema,
 
-      referralCode: z
+      refercode: z
         .string()
         .trim()
         .optional(),

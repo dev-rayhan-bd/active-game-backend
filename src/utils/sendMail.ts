@@ -1,19 +1,19 @@
-import nodemailer from 'nodemailer'; 
+import nodemailer from "nodemailer";
+import config from "../app/config";
 
 export const sendMail = async (to: string, subject: string, text: string) => {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: config.SMTP_USER,
+      pass: config.SMTP_PASS,
     },
   });
 
   await transporter.sendMail({
-    from: '"Your Trade Source" send you a mail ',
+    from: `CaleSalle ${config.smtp_from}`,
     to,
     subject,
     text,
   });
 };
-   

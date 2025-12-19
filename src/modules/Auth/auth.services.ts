@@ -68,11 +68,12 @@ const loginUser = async (payload: TLoginUser) => {
 
 // change password api
 const changePassword = async (
-  userData: JwtPayload,
+  me: JwtPayload,
   payload: { oldPassword: string; newPassword: string }
 ) => {
+  console.log("me--->",me);
   // checking if the user is exist
-  const user = await UserModel.isUserExistsById(userData.userId);
+  const user = await UserModel.isUserExistsById(me.userId);
   //   console.log('change pass user',user);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
@@ -91,8 +92,8 @@ const changePassword = async (
   //   console.log('user data chnge pass 78 line',userData);
   await UserModel.findOneAndUpdate(
     {
-      _id: userData.userId,
-      role: userData.role,
+      _id: me.userId,
+      role: me.role,
     },
     {
       password: newHashedPassword,
