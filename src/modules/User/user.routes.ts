@@ -14,12 +14,6 @@ import { upload } from '../../app/middleware/multer';
 
 const router = express.Router();
 
-
-
-
-
-
-
 router.patch(
   '/edit-profile',
   upload.single('image'),
@@ -46,11 +40,25 @@ router.patch(
   validateRequest(editProfileSchema),
   UserControllers.updateProfile,
 );
+
 router.get(
   '/my-profile',
  
   auth(USER_ROLE.superAdmin),
   UserControllers.getMyProfile,
+);
+
+router.patch(
+  '/update-screentime-data',
+ 
+  auth(USER_ROLE.owner,USER_ROLE.member),
+  UserControllers.updateScreenTimeData,
+);
+router.patch(
+  '/update-movement-data',
+ 
+  auth(USER_ROLE.owner,USER_ROLE.member),
+  UserControllers.updateMovementData,
 );
 
 

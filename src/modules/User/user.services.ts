@@ -39,10 +39,52 @@ const getDashboardStatsFromDB = async (year: number) => {
 
   return { monthlyData };
 };
+//sreentime and movement data 
+
+const updateScreenTimeData = async (userId: string, data: any) => {
+  const result = await UserModel.findByIdAndUpdate(
+    userId,
+    { 
+      $set: { screenTimeData: data }
+    },
+    { new: true }
+  );
+  
+  return result?.screenTimeData;
+};
+
+const updateMovementData = async (userId: string, data: any) => {
+  const result = await UserModel.findByIdAndUpdate(
+    userId,
+    { 
+      $set: { movementData: data }
+    },
+    { new: true }
+  );
+  
+  return result?.movementData;
+};
+
+// Get functions
+const getScreenTimeData = async (userId: string) => {
+  const user = await UserModel.findById(userId);
+  return user?.screenTimeData || {};
+};
+
+const getMovementData = async (userId: string) => {
+  const user = await UserModel.findById(userId);
+  return user?.movementData || {};
+};
+
+
 
 
 export const UserServices = {
   updateProfileFromDB,
   getDashboardStatsFromDB,
-  getMyProfileFromDB
+  getMyProfileFromDB,
+  updateScreenTimeData,
+  updateMovementData,
+  getScreenTimeData,
+  getMovementData,
 };

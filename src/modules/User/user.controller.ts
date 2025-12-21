@@ -69,9 +69,53 @@ const meId = req?.user?.userId
   });
 });
 
+const updateScreenTimeData = catchAsync(async (req: Request, res: Response) => {
+  console.log("req.user",req.user);
+  const userId = req?.user?.userId
+  const payload: any = { ...req.body };
+
+
+  console.log("payload----->", payload);
+
+  const result = await UserServices.updateScreenTimeData(userId, payload);
+  console.log("result--->", result);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Screen time data updated successfully',
+    data: result,
+  });
+});
+
+const updateMovementData = catchAsync(async (req: Request, res: Response) => {
+  console.log("req.user",req.user);
+  const userId = req?.user?.userId
+  const payload: any = { ...req.body };
+
+
+  console.log("payload----->", payload);
+
+  const result = await UserServices.updateScreenTimeData(userId, payload);
+  console.log("result--->", result);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Screen time data updated successfully',
+    data: result,
+  });
+});
+
+
+
+
+
 export const UserControllers = {
 
   updateProfile,
 getDashboardStats,
-getMyProfile
+getMyProfile,
+updateMovementData,
+updateScreenTimeData
 };
