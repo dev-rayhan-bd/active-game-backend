@@ -36,7 +36,7 @@ const userLogin=catchAsync(async(req,res)=>{
   const result = await AuthServices.loginUser(req.body);
 
 //set refress token on cookies
-  res.cookie('refreshToken', refreshToken, {
+  res.cookie('refreshToken', result.refreshToken, {
     secure: config.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'none',
@@ -102,8 +102,10 @@ const verifyYourOTP = catchAsync(async (req:Request, res:Response) => {
   });
   const refreshToken = catchAsync(async (req, res) => {
     const { refreshToken } = req.cookies;
-    // console.log('refreshToken',req);
+    console.log('refreshToken',refreshToken);
+  
     const result = await AuthServices.refreshToken(refreshToken);
+    console.log('refreshToken',result);
   
     sendResponse(res, {
       statusCode: httpStatus.OK,
