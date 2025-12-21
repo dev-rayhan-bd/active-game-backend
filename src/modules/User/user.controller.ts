@@ -64,7 +64,7 @@ const meId = req?.user?.userId
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'My Profile retrive successfully!',
+    message: 'Profile retrive successfully!',
     data: result,
   });
 });

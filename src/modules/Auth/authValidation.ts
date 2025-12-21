@@ -49,7 +49,8 @@ export const registerUserValidationSchema = z
 
 
 export const editProfileSchema = z.object({
-  name: z.string().min(1, "Name is required").optional(),
+  firstName: z.string().min(1, "Name is required").optional(),
+  lastName: z.string().min(1, "Name is required").optional(),
 });
 
 const forgotPasswordSchema = z.object({

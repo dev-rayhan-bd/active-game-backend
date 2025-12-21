@@ -7,6 +7,7 @@ export interface TUser {
    _id?: mongoose.Types.ObjectId;
   firstName: string;
   lastName: string;
+  image?: string;
   email: string;
   password: string;
     verification?: {

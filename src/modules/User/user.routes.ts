@@ -36,15 +36,21 @@ router.patch(
       return res.status(400).json({ message: 'Invalid data format' });
     }
   },
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.owner,USER_ROLE.member,USER_ROLE.superAdmin,USER_ROLE.admin),
   validateRequest(editProfileSchema),
   UserControllers.updateProfile,
 );
 
 router.get(
+  '/profile',
+ 
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
+  UserControllers.getMyProfile,
+);
+router.get(
   '/my-profile',
  
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.owner,USER_ROLE.member),
   UserControllers.getMyProfile,
 );
 
