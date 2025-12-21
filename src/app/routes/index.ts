@@ -5,6 +5,7 @@ import privacyPolicyRouter from '../../modules/PrivacyPolicy/privacyPolicy.route
 import termsRouter from '../../modules/Terms/terms.route';
 import { FaqRoutes } from '../../modules/FAQ/faq.routes';
 import aboutRouter from '../../modules/about/about.route';
+import { ContactRoutes } from '../../modules/ContactUs/contact.route';
 
 
 
@@ -35,6 +36,10 @@ const moduleRoutes = [
   {
     path: '/faq',
     route:FaqRoutes
+  },
+  {
+    path: '/contact',
+    route:ContactRoutes
   },
  
 
