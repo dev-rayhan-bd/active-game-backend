@@ -33,7 +33,7 @@ const registerUser = async (
 };
 
 const userLogin=catchAsync(async(req,res)=>{
-    const result = await AuthServices.loginUser(req.body);
+  const result = await AuthServices.loginUser(req.body);
 
 //set refress token on cookies
   res.cookie('refreshToken', refreshToken, {

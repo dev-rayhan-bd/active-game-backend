@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 const loginValidationSchema = z.object({
-  body: z.object({
+
     email: z.string().min(1, { message: 'Email is required' }),
     password: z.string().min(1, { message: 'Password is required' }),
-  }),
-});
+  })
+
 
 const passwordSchema = z
   .string() // must be a string; non-strings will be rejected by Zod
@@ -26,8 +26,7 @@ const passwordSchema = z
 
 
 export const registerUserValidationSchema = z.object({
-  body: z
-    .object({
+
       firstName: z
         .string({ message: "First name is required" })
         .trim()
@@ -53,48 +52,47 @@ export const registerUserValidationSchema = z.object({
         .trim()
         .optional(),
     })
-    .strict(),
-}).strict();
+    .strict()
+
 
 
 export const editProfileSchema = z.object({
-  body:z.object({
+
     name: z.string().min(1, "Name is required").optional(),
     
   })
-});
+
 
 const forgotPasswordSchema = z.object({
-      body: z.object({ email: z.string().email("Invalid email address"),})
+    email: z.email("Invalid email address"),})
  
-});
+
 
 export const verifyOtpSchema = z.object({ 
-  body: z.object({
+
     email: z.string().email("Invalid email address"),
     otp: z.string()
       .length(6, "OTP must be exactly 6 digits")
       .regex(/^\d+$/, "OTP must contain only digits"),
-  }),
-});
+  })
+
 const changePasswordValidationSchema = z.object({
-  body: z.object({
+
 
     oldPassword: z.string().min(1, { message: 'Old password is required' }),
     newPassword: z.string().min(1, { message: 'New password is required' }),
-  }),
+
 });
 const resetPasswordValidationSchema = z.object({
-  body: z.object({
+
         email: z.string().email("Invalid email address"),
     newPassword: z.string().min(1, { message: 'New password is required' }),
-  }).strict(),
-})
+
+}).strict();
+
 
 const refreshTokenValidationSchema = z.object({
-  cookie: z.object({
-    refreshToken: z.string().min(1, { message: 'Refresh token is required!' }),
-  }),
+  refreshToken: z.string().min(1, { message: " token is required!" }),
 });
 
 

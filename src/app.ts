@@ -10,6 +10,7 @@ import path from 'path';
 import router from './app/routes/index';
 import globalErrorHandler from './app/middleware/globalErrorHandler';
 import notFound from './app/middleware/notFound';
+import morgan from 'morgan';
 
 const app: Application = express();
 //parsers
@@ -38,6 +39,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(morgan("dev"))
 app.use('/api/v1', router);
 app.get('/', (req: Request, res: Response) => {
   res.send('Rot Server is Running...');
